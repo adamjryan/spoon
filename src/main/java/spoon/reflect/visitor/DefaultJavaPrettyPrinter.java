@@ -927,7 +927,7 @@ public class DefaultJavaPrettyPrinter implements CtVisitor, PrettyPrinter {
 					} else {
 						write(",");
 					}
-					write(ctexpr.toString());
+					scan(ctexpr);
 				}
 				write(")");
 			}

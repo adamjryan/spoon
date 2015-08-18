@@ -379,7 +379,6 @@ public abstract class CtElementImpl implements CtElement, Serializable , Compara
 	@Override
 	public String toString() {
 		DefaultJavaPrettyPrinter printer = new DefaultJavaPrettyPrinter(getFactory().getEnvironment());
-		printer.computeImports(this);
 		printer.scan(this);
 		return printer.toString();
 	}
