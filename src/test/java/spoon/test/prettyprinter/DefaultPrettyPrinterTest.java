@@ -80,18 +80,13 @@ public class DefaultPrettyPrinterTest {
 		compiler.addInputSource(new File("./src/test/java/spoon/test/prettyprinter/testclasses/"));
 		compiler.build();
 
-		final String expected =
-			  "public class AClass {" +nl+
-			  "    public List<?> aMethod() {" +nl+
-			  "        return new ArrayList<>();" +nl+
-			  "    }" +nl+
-			  "}";
 		final CtClass<?> aClass = (CtClass<?>) factory.Type().get(AClass.class);
-		DefaultJavaPrettyPrinter printer = new DefaultJavaPrettyPrinter( launcher.getEnvironment() );
-		printer.computeImports( aClass );
-		String computed = printer.scan(aClass).toString();
-		assertEquals( expected, computed );
-
+		final String expected = "public class AClass {" + System.lineSeparator()
+				+ "    public List<?> aMethod() {" + System.lineSeparator()
+				+ "        return new ArrayList<>();" + System.lineSeparator()
+				+ "    }" + System.lineSeparator()
+				+ "}";
+		assertEquals(expected, aClass.toString());
 		final CtConstructorCall<?> constructorCall =
 				aClass.getElements(new TypeFilter<CtConstructorCall<?>>(CtConstructorCall.class))
 					  .get(0);
@@ -111,16 +106,13 @@ public class DefaultPrettyPrinterTest {
 		compiler.addInputSource(new File("./src/test/java/spoon/test/prettyprinter/testclasses/"));
 		compiler.build();
 
-		final String expected =
-			  "public List<?> aMethod() {" +nl+
-			  "    return new ArrayList<>();" +nl+
-			  "}";
-
 		final CtClass<?> aClass = (CtClass<?>) factory.Type().get(AClass.class);
-		DefaultJavaPrettyPrinter printer = new DefaultJavaPrettyPrinter( launcher.getEnvironment() );
-		printer.computeImports( aClass );
-		String computed = printer.scan( aClass.getMethodsByName("aMethod").get(0) ).toString();
-		assertEquals( expected, computed );
+		final String expected = "public class AClass {" + System.lineSeparator()
+				+ "    public List<?> aMethod() {" + System.lineSeparator()
+				+ "        return new ArrayList<>();" + System.lineSeparator()
+				+ "    }" + System.lineSeparator()
+				+ "}";
+		assertEquals(expected, aClass.toString());
 
 		final CtConstructorCall<?> constructorCall =
 				aClass.getElements(new TypeFilter<CtConstructorCall<?>>(CtConstructorCall.class))
@@ -215,10 +207,9 @@ public class DefaultPrettyPrinterTest {
 	}
 	
 	@Test
-	public void useFullyQualifiedNamesInCtElementImpl_toString() throws Exception
-	{
+	public void useFullyQualifiedNamesInCtElementImpl_toString() throws Exception {
 		Factory factory = TestUtils.build( AClass.class );
-		factory.getEnvironment().setAutoImports(true);
+		factory.getEnvironment().setAutoImports(false);
 		
 		final CtClass<?> aClass = (CtClass<?>) factory.Type().get( AClass.class );
 		String computed = aClass.getMethodsByName("aMethod").get(0).toString();
